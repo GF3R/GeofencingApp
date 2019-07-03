@@ -1,0 +1,27 @@
+
+lsquid:HiddenFieldCheckE"CRename "locationManager" which hides the field declared at line 55.(¦åÃ“8òËÂùº-
+dsquid:S21841"FCast one of the operands of this multiplication operation to a "long".(Ë·¼¬8òËÂùº-
+hsquid:UselessImportCheck"=Remove this unused import 'androidx.core.app.ActivityCompat'.(ş¤—²8òËÂùº-
+\
+squid:S106ß"9Replace this use of System.out or System.err by a logger.(ñ×©Ûüÿÿÿÿ8–¦Êùº-
+Wsquid:S10680"4Remove this unused "geofencingClient" private field.(ıƒ±†ıÿÿÿÿ8òËÂùº-
+‚squid:S14500"_Remove the "geofencingClient" field and declare it as a local variable in the relevant methods.(ıƒ±†ıÿÿÿÿ8òËÂùº-
+€squid:S001168"aRename this field "MY_PERMISSIONS_REQUEST" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(é…êé8òËÂùº-
+dsquid:CallToDeprecatedMethod|"5Remove this use of "GeofencingApi"; it is deprecated.(œ÷§ˆ8òËÂùº-
+Usquid:S1153ˆ"1Directly append the argument of String.valueOf().(£ˆ¥äüÿÿÿÿ8òËÂùº-
+Osquid:S1172ƒ"+Remove this unused method parameter "view".(—­æùÿÿÿÿ8òËÂùº-
+qsquid:MaximumInheritanceDepth,"<This class has 8 parents which is greater than 5 authorized.(£×¬¦ûÿÿÿÿ8òËÂùº-
+Vsquid:S1197Q"8Move the array designator from the variable to the type.(¯ÜÑñ8òËÂùº-
+\"squid:SwitchLastCaseIsDefaultCheckR""Add a default case to this switch.(×ö³–úÿÿÿÿ8òËÂùº-
+|squid:S2293D"YReplace the type specification in this constructor call with the diamond operator ("<>").(ô‘ŸÅüÿÿÿÿ8òËÂùº-
+ squid:S1186Ñ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(½ë¿í8–¦Êùº-
+nsquid:S1301R"KReplace this "switch" statement by "if" statements to increase readability.(×ö³–úÿÿÿÿ8òËÂùº-
+vsquid:UselessImportCheck'"KRemove this unused import 'com.google.android.gms.tasks.OnSuccessListener'.(íå¡8òËÂùº-
+¥squid:S1186³"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(é¬“âùÿÿÿÿ8–¦Êùº-
+¥squid:S1186¸"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(±ìÑùÿÿÿÿ8–¦Êùº-
+{squid:UselessImportCheck&"KRemove this unused import 'com.google.android.gms.tasks.OnFailureListener'.(ï¿ŞŞúÿÿÿÿ8òËÂùº-
+?squid:S11708"!Make this final field static too.(é…êé8òËÂùº-
+}squid:UselessImportCheck"MRemove this unused import 'com.google.android.gms.common.internal.Constants'.(îÀ¤üÿÿÿÿ8òËÂùº-
+ squid:S1186½"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬•çŠ8–¦Êùº-
+Ksquid:S1199S"-Extract this nested code block into a method.(ôØÿŸ8òËÂùº-
+]squid:UselessImportCheck"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ8õ•–Š»-

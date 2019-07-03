@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">GeofencingApp</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">GeoFencing Application</string>
 </resources>

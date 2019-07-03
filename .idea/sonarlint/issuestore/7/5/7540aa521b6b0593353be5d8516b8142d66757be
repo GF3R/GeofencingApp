@@ -1,0 +1,11 @@
+
+ssquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”ßáÔúÿÿÿÿ8Ú¿§ùº-
+[squid:UselessImportCheck"-Remove this unused import 'android.os.Build'.(ãÇ¤Úıÿÿÿÿ8Ú¿§ùº-
+Jsquid:S1172".Remove this unused method parameter "message".(Ì–§8Ú¿§ùº-
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(ÑĞ 8Ú¿§ùº-
+ssquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñÛÑ¿øÿÿÿÿ8Ú¿§ùº-
+jsquid:UselessImportCheck"ARemove this unused import 'androidx.core.app.NotificationCompat'.(œéÔã8Ú¿§ùº-
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(²òÈÎüÿÿÿÿ8Ú¿§ùº-
+vsquid:UselessImportCheck"HRemove this unused import 'androidx.core.app.NotificationManagerCompat'.(¥¤”úÿÿÿÿ8Ú¿§ùº-
