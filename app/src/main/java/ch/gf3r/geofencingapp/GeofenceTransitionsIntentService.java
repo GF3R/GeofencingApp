@@ -7,12 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -20,6 +25,7 @@ import androidx.core.app.TaskStackBuilder;
 public class GeofenceTransitionsIntentService extends IntentService {
     protected static final String TAG = "GeofenceTransitionsIS";
     Context mContext;
+    GeoFenceTransitionHandler geoFenceTransitionHandler;
 
     public GeofenceTransitionsIntentService() {
         super(TAG);
@@ -29,6 +35,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
     public void onCreate() {
         super.onCreate();
         this.mContext = this;
+        geoFenceTransitionHandler = new GeoFenceTransitionHandler(this);
     }
 
     @Override
@@ -44,53 +51,41 @@ public class GeofenceTransitionsIntentService extends IntentService {
             Log.e(TAG, errorMessage);
             return;
         }
-        int geofenceTransition = geofencingEvent.getGeofenceTransition();
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
-                geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-            List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
-            String geofenceTransitionDetails = getGeofenceTransitionDetails(
-                    geofenceTransition,
-                    triggeringGeofences
-            );
-            sendNotification(geofenceTransitionDetails);
-            //Here a external api could be called with the geofencedetaisl as a json
-            /*
-            {
-                type: "ENTERED_OR_EXITED"
-                title: "NAME_OF_GEOFENCE"
-                user_id: "UID_OF_USER
-            }
-            //This coud then trigger many different things
-             */
-            Log.i(TAG, geofenceTransitionDetails);
-        } else {
-            System.out.println("error while transitioning");
+
+        List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
+        Location loc = geofencingEvent.getTriggeringLocation();
+        LatLng latLng = new LatLng(loc.getLatitude(), loc.getLongitude());
+        String name = getGeofenceIds(triggeringGeofences);
+        switch(geofencingEvent.getGeofenceTransition()){
+            case Geofence.GEOFENCE_TRANSITION_ENTER :
+                sendNotification("ENTERED " + name);
+                geoFenceTransitionHandler.HandleTransition(true, name, latLng);
+                return;
+            case Geofence.GEOFENCE_TRANSITION_EXIT:
+                name = getGeofenceIds(triggeringGeofences);
+                sendNotification("EXITED " + name);
+                geoFenceTransitionHandler.HandleTransition(false, name, latLng);
+                return;
+            default:
+                System.out.println("error while transitioning");
+                return;
+
         }
     }
 
-    private String getGeofenceTransitionDetails(int geofenceTransition, List<Geofence> triggeringGeofences) {
-        String geofenceTransitionString = getTransitionString(geofenceTransition);
+    private String getGeofenceIds(List<Geofence> triggeringGeofences) {
         ArrayList<String> triggeringGeofencesIdsList = new ArrayList<>();
         for (Geofence geofence : triggeringGeofences) {
             triggeringGeofencesIdsList.add(geofence.getRequestId());
+
         }
         String triggeringGeofencesIdsString = TextUtils.join(", ",  triggeringGeofencesIdsList);
-        return geofenceTransitionString + ": " + triggeringGeofencesIdsString;
+        return triggeringGeofencesIdsString;
     }
-
-    private String getTransitionString(int transitionType) {
-        switch (transitionType) {
-            case Geofence.GEOFENCE_TRANSITION_ENTER:
-                return "Entered";
-            case Geofence.GEOFENCE_TRANSITION_EXIT:
-                return "Exited";
-            default:
-                return "Unknown";
-        }
-    }
-
 
     private void sendNotification(String notificationDetails) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        String timestamp = simpleDateFormat.format(new Date());
         String CHANNEL_ID = "com.ch.bfh";
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -111,7 +106,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
                         R.drawable.common_full_open_on_phone))
                 .setColor(Color.BLUE)
                 .setContentTitle(notificationDetails)
-                .setContentText("transition")
+                .setContentText(timestamp)
                 .setContentIntent(notificationPendingIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

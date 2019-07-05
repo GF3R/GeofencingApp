@@ -60,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Map<String, LatLng> latLngMap;
     private PendingIntent mGeofencePendingIntent;
     private Marker marker;
+    private List<Marker> markerList;
     private final int REQUEST = 22;
     private Context mContext;
     private LocationRequest locationRequest;
@@ -83,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         circlelist = new ArrayList<>();
         geofenceList = new ArrayList<>();
+        markerList = new ArrayList<>();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         geofencingClient = LocationServices.getGeofencingClient(this);
@@ -166,6 +168,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
+
     private void SetupMap() {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Permissions.Request_FINE_LOCATION(this, REQUEST);
@@ -216,7 +220,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
                 new AlertDialog.Builder(this)
@@ -225,7 +228,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                //Prompt the user once explanation has been shown
                                 ActivityCompat.requestPermissions(MapsActivity.this,
                                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                         REQUEST);
@@ -340,11 +342,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void addTextMarker(String text, LatLng point){
-        mMap.addMarker(new MarkerOptions()
+        markerList.add(mMap.addMarker(new MarkerOptions()
                 .position(point)
                 .title(text)
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-                .alpha(0.3f));
+                .alpha(0.3f)));
     }
 
     public void moveToMarkerButtonHandler(View view) {
@@ -391,6 +393,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         builder.show();
+    }
+
+    public void removeAllGeofences(View view) {
+        for (Circle circle: circlelist) {
+            circle.remove();
+        }
+        for(Marker marker: markerList){
+            marker.remove();
+        }
+
+        geofencingClient.removeGeofences(getGeofencePendingIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Geofences removed
+                        // ...
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Failed to remove geofences
+                        // ...
+                    }
+                });
+        geofenceList.clear();
+        latLngMap.clear();
     }
 }
 

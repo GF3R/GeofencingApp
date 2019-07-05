@@ -26,6 +26,19 @@
         android:onClick="moveToMarkerButtonHandler"
         android:text="Move To Marker" />
 
+    <Button
+        android:id="@+id/delete_markers"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="322dp"
+        android:layout_marginTop="3dp"
+        android:onClick="removeAllGeofences"
+        android:text="Delete all markers"
+        android:textSize="8sp"
+        android:textStyle="italic" />
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
